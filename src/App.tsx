@@ -1,26 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import CountriesList from './components/countryList';
+import { GET_USERS } from "./gql/graphql";
+import { UsersQuery } from './query/usersQuery';
 
-function App() {
+const App: React.FC = () => {
+  const { loading, error, data } = UsersQuery(GET_USERS);
+
+  if (loading) return <h1>Loading...</h1>;
+  if (error) return <h1>Something went wrong!</h1>;
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Code Challenge.</h1>
+      <CountriesList users={data?.users} />
     </div>
   );
-}
+};
 
-export default App;
+export default App;7
